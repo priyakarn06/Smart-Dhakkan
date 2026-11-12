@@ -1,0 +1,612 @@
+[
+  {
+    "manhole_id": "DL_001",
+    "status": "CRITICAL",
+    "gas_sensor": {
+      "model": "MiCS-5524",
+      "raw_adc": 97,
+      "adc_voltage": 0.2242,
+      "sensor_voltage": 0.6726,
+      "warmup_complete": true,
+      "calibrated": true,
+      "calibration_status": "CALIBRATED",
+      "air_reference": 4.280056,
+      "ratio": 1.011062,
+      "estimated_ppm": {
+        "CO": 0,
+        "H2S": 0,
+        "NH3": 0,
+        "C2H5OH": 0,
+        "CH4": 0
+      },
+      "gas_response": "MODEL_ESTIMATES"
+    },
+    "flood_sensor": {
+      "model": "DFRobot SEN0257",
+      "raw_adc": 752,
+      "adc_voltage": 0.606007,
+      "sensor_voltage": 0.909011,
+      "pressure_kpa": 163.6044
+    },
+    "water_level_above_manhole": 16.683,
+    "sewage_sensor": {
+      "model": "RCWL-1655",
+      "distance_mm": null
+    },
+    "water_level_sewage": null,
+    "orientation": {
+      "roll": -1.417642,
+      "pitch": 1.75228,
+      "yaw": -73.67754,
+      "orient_status": "ROTATED",
+      "move_status": "NO"
+    },
+    "sensor_health": {
+      "gas_sensor": true,
+      "pressure_sensor": true,
+      "ultrasonic_sensor": false,
+      "imu": true
+    },
+    "system": {
+      "uptime_ms": 505412,
+      "api_request_count": 1,
+      "wifi_status": "CONNECTED",
+      "wifi_rssi": -51,
+      "ip_address": "192.168.1.10"
+    },
+    "location": {
+      "lat": 28.606789,
+      "lng": 77.299414,
+      "name": "Mayur Vihar Phase 1"
+    }
+  },
+  {
+    "manhole_id": "DL_002",
+    "status": "NORMAL",
+    "gas_sensor": {
+      "model": "MiCS-5524",
+      "raw_adc": 104,
+      "adc_voltage": 0.2404,
+      "sensor_voltage": 0.7212,
+      "warmup_complete": true,
+      "calibrated": true,
+      "calibration_status": "CALIBRATED",
+      "air_reference": 4.310025,
+      "ratio": 1.042015,
+      "estimated_ppm": {
+        "CO": 0,
+        "H2S": 0,
+        "NH3": 0,
+        "C2H5OH": 0,
+        "CH4": 0
+      },
+      "gas_response": "MODEL_ESTIMATES"
+    },
+    "flood_sensor": {
+      "model": "DFRobot SEN0257",
+      "raw_adc": 620,
+      "adc_voltage": 0.4996,
+      "sensor_voltage": 0.7494,
+      "pressure_kpa": 98.4215
+    },
+    "water_level_above_manhole": 5.42,
+    "sewage_sensor": {
+      "model": "RCWL-1655",
+      "distance_mm": 315
+    },
+    "water_level_sewage": 315,
+    "orientation": {
+      "roll": 0.4215,
+      "pitch": -0.6521,
+      "yaw": 12.4521,
+      "orient_status": "NORMAL",
+      "move_status": "NO"
+    },
+    "sensor_health": {
+      "gas_sensor": true,
+      "pressure_sensor": true,
+      "ultrasonic_sensor": true,
+      "imu": true
+    },
+    "system": {
+      "uptime_ms": 605412,
+      "api_request_count": 12,
+      "wifi_status": "CONNECTED",
+      "wifi_rssi": -58,
+      "ip_address": "192.168.1.11"
+    },
+    "location": {
+      "lat": 28.61858,
+      "lng": 77.30131,
+      "name": "Mayur Vihar Phase 2"
+    }
+  },
+  {
+    "manhole_id": "DL_003",
+    "status": "WARNING",
+    "gas_sensor": {
+      "model": "MiCS-5524",
+      "raw_adc": 128,
+      "adc_voltage": 0.2959,
+      "sensor_voltage": 0.8877,
+      "warmup_complete": true,
+      "calibrated": true,
+      "calibration_status": "CALIBRATED",
+      "air_reference": 4.190052,
+      "ratio": 1.221045,
+      "estimated_ppm": {
+        "CO": 12,
+        "H2S": 0,
+        "NH3": 0,
+        "C2H5OH": 3,
+        "CH4": 0
+      },
+      "gas_response": "MODEL_ESTIMATES"
+    },
+    "flood_sensor": {
+      "model": "DFRobot SEN0257",
+      "raw_adc": 710,
+      "adc_voltage": 0.5725,
+      "sensor_voltage": 0.8588,
+      "pressure_kpa": 128.7742
+    },
+    "water_level_above_manhole": 11.24,
+    "sewage_sensor": {
+      "model": "RCWL-1655",
+      "distance_mm": 245
+    },
+    "water_level_sewage": 245,
+    "orientation": {
+      "roll": 3.2145,
+      "pitch": -2.4215,
+      "yaw": -69.2451,
+      "orient_status": "NORMAL",
+      "move_status": "NO"
+    },
+    "sensor_health": {
+      "gas_sensor": true,
+      "pressure_sensor": true,
+      "ultrasonic_sensor": true,
+      "imu": true
+    },
+    "system": {
+      "uptime_ms": 805412,
+      "api_request_count": 18,
+      "wifi_status": "CONNECTED",
+      "wifi_rssi": -62,
+      "ip_address": "192.168.1.12"
+    },
+    "location": {
+      "lat": 28.611517,
+      "lng": 77.336293,
+      "name": "Mayur Vihar Phase 3"
+    }
+  },
+  {
+    "manhole_id": "DL_004",
+    "status": "NORMAL",
+    "gas_sensor": {
+      "model": "MiCS-5524",
+      "raw_adc": 91,
+      "adc_voltage": 0.2103,
+      "sensor_voltage": 0.6309,
+      "warmup_complete": true,
+      "calibrated": true,
+      "calibration_status": "CALIBRATED",
+      "air_reference": 4.350012,
+      "ratio": 0.982145,
+      "estimated_ppm": {
+        "CO": 0,
+        "H2S": 0,
+        "NH3": 0,
+        "C2H5OH": 0,
+        "CH4": 0
+      },
+      "gas_response": "MODEL_ESTIMATES"
+    },
+    "flood_sensor": {
+      "model": "DFRobot SEN0257",
+      "raw_adc": 580,
+      "adc_voltage": 0.4673,
+      "sensor_voltage": 0.701,
+      "pressure_kpa": 89.1025
+    },
+    "water_level_above_manhole": 3.86,
+    "sewage_sensor": {
+      "model": "RCWL-1655",
+      "distance_mm": 340
+    },
+    "water_level_sewage": 340,
+    "orientation": {
+      "roll": -0.8521,
+      "pitch": 1.1245,
+      "yaw": 24.1254,
+      "orient_status": "NORMAL",
+      "move_status": "NO"
+    },
+    "sensor_health": {
+      "gas_sensor": true,
+      "pressure_sensor": true,
+      "ultrasonic_sensor": true,
+      "imu": true
+    },
+    "system": {
+      "uptime_ms": 920412,
+      "api_request_count": 23,
+      "wifi_status": "CONNECTED",
+      "wifi_rssi": -47,
+      "ip_address": "192.168.1.13"
+    },
+    "location": {
+      "lat": 28.59356,
+      "lng": 77.30813,
+      "name": "New Ashok Nagar"
+    }
+  },
+  {
+    "manhole_id": "DL_005",
+    "status": "CRITICAL",
+    "gas_sensor": {
+      "model": "MiCS-5524",
+      "raw_adc": 156,
+      "adc_voltage": 0.3604,
+      "sensor_voltage": 1.0812,
+      "warmup_complete": true,
+      "calibrated": true,
+      "calibration_status": "CALIBRATED",
+      "air_reference": 4.120035,
+      "ratio": 1.584025,
+      "estimated_ppm": {
+        "CO": 38,
+        "H2S": 5,
+        "NH3": 2,
+        "C2H5OH": 7,
+        "CH4": 22
+      },
+      "gas_response": "MODEL_ESTIMATES"
+    },
+    "flood_sensor": {
+      "model": "DFRobot SEN0257",
+      "raw_adc": 890,
+      "adc_voltage": 0.7175,
+      "sensor_voltage": 1.0763,
+      "pressure_kpa": 181.3325
+    },
+    "water_level_above_manhole": 19.62,
+    "sewage_sensor": {
+      "model": "RCWL-1655",
+      "distance_mm": null
+    },
+    "water_level_sewage": null,
+    "orientation": {
+      "roll": 9.4215,
+      "pitch": 12.1254,
+      "yaw": 110.5214,
+      "orient_status": "ROTATED",
+      "move_status": "YES"
+    },
+    "sensor_health": {
+      "gas_sensor": true,
+      "pressure_sensor": true,
+      "ultrasonic_sensor": false,
+      "imu": true
+    },
+    "system": {
+      "uptime_ms": 1105412,
+      "api_request_count": 31,
+      "wifi_status": "CONNECTED",
+      "wifi_rssi": -72,
+      "ip_address": "192.168.1.14"
+    },
+    "location": {
+      "lat": 28.60668,
+      "lng": 77.30878,
+      "name": "Trilokpuri"
+    }
+  },
+  {
+    "manhole_id": "DL_006",
+    "status": "WARNING",
+    "gas_sensor": {
+      "model": "MiCS-5524",
+      "raw_adc": 119,
+      "adc_voltage": 0.275,
+      "sensor_voltage": 0.825,
+      "warmup_complete": true,
+      "calibrated": true,
+      "calibration_status": "CALIBRATED",
+      "air_reference": 4.220015,
+      "ratio": 1.185025,
+      "estimated_ppm": {
+        "CO": 4,
+        "H2S": 0,
+        "NH3": 14,
+        "C2H5OH": 4,
+        "CH4": 0
+      },
+      "gas_response": "MODEL_ESTIMATES"
+    },
+    "flood_sensor": {
+      "model": "DFRobot SEN0257",
+      "raw_adc": 760,
+      "adc_voltage": 0.6125,
+      "sensor_voltage": 0.9187,
+      "pressure_kpa": 139.2251
+    },
+    "water_level_above_manhole": 12.8,
+    "sewage_sensor": {
+      "model": "RCWL-1655",
+      "distance_mm": 190
+    },
+    "water_level_sewage": 190,
+    "orientation": {
+      "roll": -5.1254,
+      "pitch": 4.8251,
+      "yaw": -30.4215,
+      "orient_status": "ROTATED",
+      "move_status": "NO"
+    },
+    "sensor_health": {
+      "gas_sensor": true,
+      "pressure_sensor": true,
+      "ultrasonic_sensor": true,
+      "imu": true
+    },
+    "system": {
+      "uptime_ms": 1250412,
+      "api_request_count": 36,
+      "wifi_status": "CONNECTED",
+      "wifi_rssi": -64,
+      "ip_address": "192.168.1.15"
+    },
+    "location": {
+      "lat": 28.61593,
+      "lng": 77.31764,
+      "name": "Kalyanpuri"
+    }
+  },
+  {
+    "manhole_id": "DL_007",
+    "status": "NORMAL",
+    "gas_sensor": {
+      "model": "MiCS-5524",
+      "raw_adc": 99,
+      "adc_voltage": 0.2288,
+      "sensor_voltage": 0.6864,
+      "warmup_complete": true,
+      "calibrated": true,
+      "calibration_status": "CALIBRATED",
+      "air_reference": 4.380025,
+      "ratio": 0.995215,
+      "estimated_ppm": {
+        "CO": 0,
+        "H2S": 0,
+        "NH3": 0,
+        "C2H5OH": 0,
+        "CH4": 0
+      },
+      "gas_response": "MODEL_ESTIMATES"
+    },
+    "flood_sensor": {
+      "model": "DFRobot SEN0257",
+      "raw_adc": 550,
+      "adc_voltage": 0.4431,
+      "sensor_voltage": 0.6646,
+      "pressure_kpa": 76.5025
+    },
+    "water_level_above_manhole": 2.9,
+    "sewage_sensor": {
+      "model": "RCWL-1655",
+      "distance_mm": 365
+    },
+    "water_level_sewage": 365,
+    "orientation": {
+      "roll": -0.5214,
+      "pitch": 0.8125,
+      "yaw": 8.4215,
+      "orient_status": "NORMAL",
+      "move_status": "NO"
+    },
+    "sensor_health": {
+      "gas_sensor": true,
+      "pressure_sensor": true,
+      "ultrasonic_sensor": true,
+      "imu": true
+    },
+    "system": {
+      "uptime_ms": 1405412,
+      "api_request_count": 42,
+      "wifi_status": "CONNECTED",
+      "wifi_rssi": -49,
+      "ip_address": "192.168.1.16"
+    },
+    "location": {
+      "lat": 28.61167,
+      "lng": 77.32667,
+      "name": "Kondli"
+    }
+  },
+  {
+    "manhole_id": "DL_008",
+    "status": "WARNING",
+    "gas_sensor": {
+      "model": "MiCS-5524",
+      "raw_adc": 110,
+      "adc_voltage": 0.2542,
+      "sensor_voltage": 0.7626,
+      "warmup_complete": true,
+      "calibrated": true,
+      "calibration_status": "CALIBRATED",
+      "air_reference": 4.260015,
+      "ratio": 1.102145,
+      "estimated_ppm": {
+        "CO": 2,
+        "H2S": 0,
+        "NH3": 0,
+        "C2H5OH": 1,
+        "CH4": 0
+      },
+      "gas_response": "MODEL_ESTIMATES"
+    },
+    "flood_sensor": {
+      "model": "DFRobot SEN0257",
+      "raw_adc": 680,
+      "adc_voltage": 0.5483,
+      "sensor_voltage": 0.8225,
+      "pressure_kpa": 116.8251
+    },
+    "water_level_above_manhole": 8.6,
+    "sewage_sensor": {
+      "model": "RCWL-1655",
+      "distance_mm": null
+    },
+    "water_level_sewage": null,
+    "orientation": {
+      "roll": 1.1254,
+      "pitch": -1.4521,
+      "yaw": 35.2145,
+      "orient_status": "NORMAL",
+      "move_status": "NO"
+    },
+    "sensor_health": {
+      "gas_sensor": true,
+      "pressure_sensor": true,
+      "ultrasonic_sensor": false,
+      "imu": true
+    },
+    "system": {
+      "uptime_ms": 1550412,
+      "api_request_count": 48,
+      "wifi_status": "CONNECTED",
+      "wifi_rssi": -68,
+      "ip_address": "192.168.1.17"
+    },
+    "location": {
+      "lat": 28.601726,
+      "lng": 77.321122,
+      "name": "Vasundhara Enclave"
+    }
+  },
+  {
+    "manhole_id": "DL_009",
+    "status": "WARNING",
+    "gas_sensor": {
+      "model": "MiCS-5524",
+      "raw_adc": 137,
+      "adc_voltage": 0.3167,
+      "sensor_voltage": 0.9501,
+      "warmup_complete": true,
+      "calibrated": true,
+      "calibration_status": "CALIBRATED",
+      "air_reference": 4.180025,
+      "ratio": 1.325145,
+      "estimated_ppm": {
+        "CO": 18,
+        "H2S": 2,
+        "NH3": 0,
+        "C2H5OH": 3,
+        "CH4": 8
+      },
+      "gas_response": "MODEL_ESTIMATES"
+    },
+    "flood_sensor": {
+      "model": "DFRobot SEN0257",
+      "raw_adc": 790,
+      "adc_voltage": 0.6367,
+      "sensor_voltage": 0.9551,
+      "pressure_kpa": 147.9251
+    },
+    "water_level_above_manhole": 14.2,
+    "sewage_sensor": {
+      "model": "RCWL-1655",
+      "distance_mm": 155
+    },
+    "water_level_sewage": 155,
+    "orientation": {
+      "roll": 6.8215,
+      "pitch": -3.2154,
+      "yaw": 44.1251,
+      "orient_status": "ROTATED",
+      "move_status": "NO"
+    },
+    "sensor_health": {
+      "gas_sensor": true,
+      "pressure_sensor": true,
+      "ultrasonic_sensor": true,
+      "imu": true
+    },
+    "system": {
+      "uptime_ms": 1705412,
+      "api_request_count": 55,
+      "wifi_status": "CONNECTED",
+      "wifi_rssi": -71,
+      "ip_address": "192.168.1.18"
+    },
+    "location": {
+      "lat": 28.61159,
+      "lng": 77.29056,
+      "name": "Patparganj"
+    }
+  },
+  {
+    "manhole_id": "DL_010",
+    "status": "CRITICAL",
+    "gas_sensor": {
+      "model": "MiCS-5524",
+      "raw_adc": 169,
+      "adc_voltage": 0.3908,
+      "sensor_voltage": 1.1724,
+      "warmup_complete": true,
+      "calibrated": true,
+      "calibration_status": "CALIBRATED",
+      "air_reference": 4.050025,
+      "ratio": 1.785125,
+      "estimated_ppm": {
+        "CO": 56,
+        "H2S": 11,
+        "NH3": 18,
+        "C2H5OH": 9,
+        "CH4": 31
+      },
+      "gas_response": "MODEL_ESTIMATES"
+    },
+    "flood_sensor": {
+      "model": "DFRobot SEN0257",
+      "raw_adc": 940,
+      "adc_voltage": 0.7578,
+      "sensor_voltage": 1.1367,
+      "pressure_kpa": 192.4251
+    },
+    "water_level_above_manhole": 23.7,
+    "sewage_sensor": {
+      "model": "RCWL-1655",
+      "distance_mm": null
+    },
+    "water_level_sewage": null,
+    "orientation": {
+      "roll": 14.5214,
+      "pitch": 18.1254,
+      "yaw": 125.4215,
+      "orient_status": "ROTATED",
+      "move_status": "YES"
+    },
+    "sensor_health": {
+      "gas_sensor": true,
+      "pressure_sensor": true,
+      "ultrasonic_sensor": false,
+      "imu": true
+    },
+    "system": {
+      "uptime_ms": 1855412,
+      "api_request_count": 62,
+      "wifi_status": "CONNECTED",
+      "wifi_rssi": -78,
+      "ip_address": "192.168.1.19"
+    },
+    "location": {
+      "lat": 28.61955,
+      "lng": 77.28304,
+      "name": "Pandav Nagar"
+    }
+  }
+]
