@@ -931,6 +931,11 @@ body {
   color: #b91c1c;
 }
 
+.status-pill.warning {
+  background: rgba(245,158,11,0.15);
+  color: #b45309;
+}
+
 .dashboard-map-box {
   background: #fff;
   border-radius: 12px;

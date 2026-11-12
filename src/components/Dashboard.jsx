@@ -130,26 +130,31 @@ const [searchResult, setSearchResult] = useState("");
 
     markersRef.current = {};
 
-    const manholeIconHtml = renderToString(
-      <CircleLetterM
-        size={32}
-        color="#35495e"
-        fill="#42b883"
-      />
-    );
-
-    const customManholeIcon = L.divIcon({
-      html: manholeIconHtml,
-      className: "custom-manhole-marker",
-      iconSize: [32, 32],
-      iconAnchor: [16, 16],
-    });
-
     manholes.forEach((node) => {
       const lat = node.location?.lat;
       const lng = node.location?.lng;
 
       if (lat != null && lng != null) {
+        const markerColor =
+          node.status === "CRITICAL"
+            ? "#ff351c"
+            : node.status === "WARNING"
+              ? "#ff9d2e"
+              : "#45a66b";
+
+        const customManholeIcon = L.divIcon({
+          html: renderToString(
+            <CircleLetterM
+              size={32}
+              color="#35495e"
+              fill={markerColor}
+            />
+          ),
+          className: "custom-manhole-marker",
+          iconSize: [32, 32],
+          iconAnchor: [16, 16],
+        });
+
         const marker = L.marker([lat, lng], {
           icon: customManholeIcon,
         });
@@ -467,7 +472,12 @@ const handleMapSearch = async (event) => {
                 </p>
               ) : (
                 manholes.map((node) => {
-                  const isCritical = node.status === "CRITICAL";
+                  const statusClass =
+                    node.status === "CRITICAL"
+                      ? "maintenance"
+                      : node.status === "WARNING"
+                        ? "warning"
+                        : "live";
 
                   return (
                     <div
@@ -490,9 +500,7 @@ const handleMapSearch = async (event) => {
                       </div>
 
                       <span
-                        className={`status-pill ${
-                          isCritical ? "maintenance" : "live"
-                        }`}
+                        className={`status-pill ${statusClass}`}
                       >
                         {node.status || "ONLINE"}
                       </span>
