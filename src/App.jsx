@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 
 import Login from "./components/Login";
 import Dashboard from "./components/Dashboard";
@@ -24,6 +24,14 @@ export default function App() {
   const [manholesList, setManholesList] = useState([]);
 
   const [selectedManhole, setSelectedManhole] = useState(null);
+
+  const [deviceManhole, setDeviceManhole] = useState(null);
+
+  const [deviceDetailsLoading, setDeviceDetailsLoading] = useState(false);
+
+  const [deviceDetailsError, setDeviceDetailsError] = useState(null);
+
+  const deviceDetailsRequest = useRef(null);
 
   const [loading, setLoading] = useState(true);
 
@@ -62,6 +70,99 @@ export default function App() {
     }
   }, [isLoggedIn]);
 
+  const loadDeviceDetails = useCallback(async () => {
+    if (deviceDetailsRequest.current) return;
+
+    const controller = new AbortController();
+    deviceDetailsRequest.current = controller;
+    setDeviceDetailsLoading(true);
+    setDeviceDetailsError(null);
+
+    try {
+      const response = await fetch("http://manhole.local/DL_001/data", {
+        signal: controller.signal,
+        cache: "no-store",
+      });
+
+      if (!response.ok) {
+        throw new Error(`Device data request failed (${response.status})`);
+      }
+
+      const data = await response.json();
+
+      if (
+        !data ||
+        typeof data !== "object" ||
+        Array.isArray(data) ||
+        data.manhole_id !== "DL_001"
+      ) {
+        throw new Error("Device returned invalid data for DL_001");
+      }
+
+      setDeviceManhole(data);
+    } catch (requestError) {
+      if (controller.signal.aborted) return;
+
+      console.error("Failed to load DL_001 device data:", requestError);
+      setDeviceDetailsError(
+        "Failed to load DL_001 device data. Check that the device is reachable."
+      );
+    } finally {
+      if (deviceDetailsRequest.current === controller) {
+        deviceDetailsRequest.current = null;
+        setDeviceDetailsLoading(false);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (
+      !isLoggedIn ||
+      activeTab !== "details" ||
+      selectedManhole?.manhole_id !== "DL_001"
+    ) {
+      return;
+    }
+
+    const refreshId = window.setTimeout(loadDeviceDetails, 0);
+    const pollId = window.setInterval(loadDeviceDetails, 3000);
+
+    return () => {
+      window.clearTimeout(refreshId);
+      window.clearInterval(pollId);
+      deviceDetailsRequest.current?.abort();
+      deviceDetailsRequest.current = null;
+    };
+  }, [isLoggedIn, activeTab, selectedManhole?.manhole_id, loadDeviceDetails]);
+
+  const handleManholeSelect = (node) => {
+    setSelectedManhole(node);
+
+    if (node.manhole_id === "DL_001") {
+      if (!deviceManhole && !deviceDetailsLoading) {
+        loadDeviceDetails();
+      }
+      return;
+    }
+
+    deviceDetailsRequest.current?.abort();
+    deviceDetailsRequest.current = null;
+    setDeviceDetailsLoading(false);
+    setDeviceDetailsError(null);
+  };
+
+  const handleDetailsTabClick = () => {
+    setActiveTab("details");
+
+    if (
+      selectedManhole?.manhole_id === "DL_001" &&
+      !deviceManhole &&
+      !deviceDetailsLoading
+    ) {
+      loadDeviceDetails();
+    }
+  };
+
   // =====================================
   // LOGIN SCREEN
   // =====================================
@@ -72,6 +173,7 @@ export default function App() {
         onLogin={() => {
           setIsLoggedIn(true);
           setActiveTab("dashboard");
+          loadDeviceDetails();
         }}
       />
     );
@@ -121,7 +223,7 @@ export default function App() {
               className={`sidebar-item ${
                 activeTab === "details" ? "active" : ""
               }`}
-              onClick={() => setActiveTab("details")}
+              onClick={handleDetailsTabClick}
             >
               <Activity size={20} />
 
@@ -156,11 +258,9 @@ export default function App() {
         {activeTab === "dashboard" ? (
           <Dashboard
             manholes={manholesList}
+            deviceManhole={deviceManhole}
             onSelectManhole={(node) => {
-              // Save the clicked manhole
-              setSelectedManhole(node);
-
-              // Navigate to Manhole Details page
+              handleManholeSelect(node);
               setActiveTab("details");
             }}
           />
@@ -175,7 +275,7 @@ export default function App() {
                 <GoogleMap
                   manholes={manholesList}
                   onSelectManhole={(node) => {
-                    setSelectedManhole(node);
+                    handleManholeSelect(node);
                   }}
                 />
               </div>
@@ -199,11 +299,45 @@ export default function App() {
                 </div>
               )}
 
-              {!loading && !error && (
-                <ManholeDetails
-                  manhole={selectedManhole || manholesList[0] || null}
-                />
-              )}
+              {!loading &&
+                !error &&
+                (selectedManhole?.manhole_id === "DL_001" ? (
+                  !deviceManhole && deviceDetailsLoading ? (
+                    <div className="details-loading-state" role="status">
+                      <span className="loading-spinner" aria-hidden="true" />
+                      <span>Loading DL_001 device data...</span>
+                    </div>
+                  ) : !deviceManhole && deviceDetailsError ? (
+                    <div
+                      role="alert"
+                      style={{ padding: "20px", color: "red" }}
+                    >
+                      {deviceDetailsError}
+                    </div>
+                  ) : deviceManhole ? (
+                    <>
+                      {deviceDetailsError && (
+                        <div
+                          role="alert"
+                          style={{ padding: "12px 20px", color: "#b45309" }}
+                        >
+                          {deviceDetailsError} Showing the last received
+                          readings.
+                        </div>
+                      )}
+                      <ManholeDetails manhole={deviceManhole} />
+                    </>
+                  ) : (
+                    <div className="details-loading-state" role="status">
+                      <span className="loading-spinner" aria-hidden="true" />
+                      <span>Loading DL_001 device data...</span>
+                    </div>
+                  )
+                ) : (
+                  <ManholeDetails
+                    manhole={selectedManhole || manholesList[0] || null}
+                  />
+                ))}
             </div>
           </div>
         )}

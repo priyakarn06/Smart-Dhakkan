@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Activity,
   Wind,
@@ -104,6 +103,13 @@ export default function ManholeDetails({ manhole }) {
 
   const isCritical = manhole.status === "CRITICAL";
   const isWarning = manhole.status === "WARNING";
+  const coverPosition = String(
+    manhole.cover_position ?? manhole.orientation?.cover_position ?? "",
+  )
+    .trim()
+    .toUpperCase();
+  const isCoverOpen = coverPosition === "OPEN";
+  const isCoverClosed = coverPosition === "CLOSE" || coverPosition === "CLOSED";
 
   const getStatusBadgeClass = () => {
     if (isCritical) return "status-badge critical";
@@ -239,15 +245,21 @@ export default function ManholeDetails({ manhole }) {
             </div>
           </div>
 
-          {/* Cover Position - Open and Close reference only */}
-          <div className="axes-grid">
-            <div className="axis-box">
+          <div className="axes-grid cover-position-grid">
+            <div
+              className={`axis-box ${isCoverOpen ? "active open" : ""}`}
+              aria-label={`Cover open: ${isCoverOpen ? "active" : "inactive"}`}
+            >
               <span>Open</span>
-              <span></span>
+              <strong>{isCoverOpen ? "Active" : "Inactive"}</strong>
             </div>
 
-            <div className="axis-box">
+            <div
+              className={`axis-box ${isCoverClosed ? "active closed" : ""}`}
+              aria-label={`Cover close: ${isCoverClosed ? "active" : "inactive"}`}
+            >
               <span>Close</span>
+              <strong>{isCoverClosed ? "Active" : "Inactive"}</strong>
             </div>
           </div>
 

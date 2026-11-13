@@ -1,5 +1,4 @@
-
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { renderToString } from "react-dom/server";
@@ -15,8 +14,8 @@ import {
   Info,
   X,
   Check,
+  Download,
 } from "lucide-react";
-
 const severityLevels = [
   { label: "Extreme", color: "#b00000" },
   { label: "Danger", color: "#ff351c" },
@@ -55,9 +54,14 @@ const addMapLayer = (map, mapType, baseLayerRef, labelsLayerRef) => {
   }
 };
 
-export default function Dashboard({ manholes = [], onSelectManhole }) {
+export default function Dashboard({
+  manholes = [],
+  deviceManhole = null,
+  onSelectManhole,
+}) {
   const [selectedId, setSelectedId] = useState(null);
   const [isListCollapsed, setIsListCollapsed] = useState(false);
+  const [reportError, setReportError] = useState("");
   // Location search states
 const [searchQuery, setSearchQuery] = useState("");
 const [isSearching, setIsSearching] = useState(false);
@@ -262,6 +266,33 @@ useEffect(() => {
     }
   };
 
+  const getReportData = (node) =>
+    deviceManhole?.manhole_id === node.manhole_id ? deviceManhole : node;
+
+  const handleDownloadReport = async (node) => {
+    try {
+      setReportError("");
+      const { downloadManholeReport } = await import("../utils/manholeReports");
+      downloadManholeReport(getReportData(node));
+    } catch (downloadError) {
+      console.error("Failed to generate manhole report:", downloadError);
+      setReportError("Could not generate the report. Please try again.");
+    }
+  };
+
+  const handleDownloadAllReports = async () => {
+    try {
+      setReportError("");
+      const { downloadAllManholeReports } = await import(
+        "../utils/manholeReports"
+      );
+      downloadAllManholeReports(manholes.map(getReportData));
+    } catch (downloadError) {
+      console.error("Failed to generate manhole reports:", downloadError);
+      setReportError("Could not generate the reports. Please try again.");
+    }
+  };
+
 
 // Search any location on the map
 const handleMapSearch = async (event) => {
@@ -435,6 +466,19 @@ const handleMapSearch = async (event) => {
               <span>Manhole Nodes List</span>
             )}
 
+            {!isListCollapsed && (
+              <button
+                type="button"
+                className="report-download-all"
+                onClick={handleDownloadAllReports}
+                disabled={manholes.length === 0}
+                aria-label="Download reports for all manholes as one PDF"
+              >
+                <Download size={15} />
+                <span>All PDF</span>
+              </button>
+            )}
+
             <button
               className="list-collapse-btn"
               onClick={() =>
@@ -459,6 +503,12 @@ const handleMapSearch = async (event) => {
               )}
             </button>
           </div>
+
+          {reportError && (
+            <div className="report-error" role="alert">
+              {reportError}
+            </div>
+          )}
 
           {!isListCollapsed && (
             <div className="manholes-scroll-container">
@@ -497,13 +547,40 @@ const handleMapSearch = async (event) => {
                         <span className="node-loc">
                           {node.location?.name || "Unknown Location"}
                         </span>
+
+                        {node.manhole_id === "DL_001" && (
+                          <button
+                            type="button"
+                            className="node-data-link"
+                            aria-label="Open data for DL_001"
+                            onClick={(event) => {
+                              event.stopPropagation();
+                              handleItemClick(node);
+                            }}
+                          >
+                         
+                          </button>
+                        )}
                       </div>
 
-                      <span
-                        className={`status-pill ${statusClass}`}
-                      >
-                        {node.status || "ONLINE"}
-                      </span>
+                      <div className="manhole-item-actions">
+                        <span className={`status-pill ${statusClass}`}>
+                          {node.status || "ONLINE"}
+                        </span>
+                        <button
+                          type="button"
+                          className="node-report-button"
+                          aria-label={`Download report for ${node.manhole_id}`}
+                          title={`Download ${node.manhole_id} report as PDF`}
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            handleDownloadReport(node);
+                          }}
+                        >
+                          <Download size={14} />
+                          <span>PDF</span>
+                        </button>
+                      </div>
                     </div>
                   );
                 })
