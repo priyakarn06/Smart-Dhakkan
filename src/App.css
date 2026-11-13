@@ -173,21 +173,17 @@ body {
 }
 
 .sidebar-brand-box {
-  padding: 0 4px;
+  padding: 8px;
   overflow: hidden;
+  background: #fff;
+  border-radius: 8px;
 }
 
-.brand-title {
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: #fff;
-  margin: 0 0 2px;
-}
-
-.brand-subtitle {
-  font-size: 0.75rem;
-  color: rgba(255,255,255,0.7);
-  margin: 0;
+.sidebar-company-logo {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
 }
 
 .sidebar.collapsed .sidebar-brand-box {
@@ -302,6 +298,17 @@ body {
   background: transparent !important;
   border: none !important;
   box-shadow: none !important;
+}
+
+.custom-manhole-marker {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.manhole-id-tooltip {
+  color: var(--dark-blue);
+  font-weight: 600;
 }
 
 /* =========================================

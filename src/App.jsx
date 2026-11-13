@@ -236,7 +236,11 @@ export default function App() {
         <div className="sidebar-footer">
           {!isCollapsed && (
             <div className="sidebar-brand-box">
-              <h4 className="brand-title">D-tech</h4>
+              <img
+                className="sidebar-company-logo"
+                src="/dtech-logo.png"
+                alt="DTE4 Calamity and Humanity Pvt Ltd"
+              />
             </div>
           )}
 
@@ -274,6 +278,7 @@ export default function App() {
               <div className="map-card">
                 <GoogleMap
                   manholes={manholesList}
+                  selectedManhole={selectedManhole}
                   onSelectManhole={(node) => {
                     handleManholeSelect(node);
                   }}

@@ -1,28 +1,39 @@
-import React, { useEffect, useRef } from 'react';
-import L from 'leaflet';
-import 'leaflet/dist/leaflet.css';
+import { useEffect, useRef } from "react";
+import { renderToString } from "react-dom/server";
+import { CircleLetterM } from "lucide-react";
+import L from "leaflet";
+import "leaflet/dist/leaflet.css";
 
-export default function GoogleMap({ manholes = [], onSelectManhole }) {
+export default function GoogleMap({
+  manholes = [],
+  selectedManhole,
+  onSelectManhole,
+}) {
   const mapRef = useRef(null);
   const markersRef = useRef({});
+  const onSelectManholeRef = useRef(onSelectManhole);
+
+  useEffect(() => {
+    onSelectManholeRef.current = onSelectManhole;
+  }, [onSelectManhole]);
 
   useEffect(() => {
     if (!manholes || manholes.length === 0) return;
 
-    const centerLat = manholes[0]?.location?.lat || 28.6139;
-    const centerLng = manholes[0]?.location?.lng || 77.2090;
+    const centerLat = manholes[0]?.location?.lat ?? 28.6139;
+    const centerLng = manholes[0]?.location?.lng ?? 77.209;
 
     if (!mapRef.current) {
-      const map = L.map('map-element', {
+      const map = L.map("map-element", {
         zoomControl: true,
-        scrollWheelZoom: true
+        scrollWheelZoom: true,
       }).setView([centerLat, centerLng], 14);
 
       mapRef.current = map;
 
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         maxZoom: 19,
-        attribution: '© OpenStreetMap'
+        attribution: "© OpenStreetMap",
       }).addTo(map);
     }
 
@@ -32,34 +43,34 @@ export default function GoogleMap({ manholes = [], onSelectManhole }) {
     Object.values(markersRef.current).forEach(marker => marker.remove());
     markersRef.current = {};
 
-    // Direct, highly reliable SVG HTML string for the red map pin
-    const redPinSvg = `
-      <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="#ef4444" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0px 3px 4px rgba(0,0,0,0.3));">
-        <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
-        <circle cx="12" cy="10" r="3" fill="#ffffff"/>
-      </svg>
-    `;
-
-    const customPinIcon = L.divIcon({
-      html: redPinSvg,
-      className: 'custom-red-pin-container',
-      iconSize: [40, 40],
-      iconAnchor: [20, 40], // Anchors the bottom tip exactly on the coordinates
-      popupAnchor: [0, -40]
-    });
-
-    // Loop through every manhole and add marker
     manholes.forEach((node) => {
       const lat = node.location?.lat;
       const lng = node.location?.lng;
 
-      if (lat && lng) {
-        const marker = L.marker([lat, lng], { icon: customPinIcon }).addTo(map);
+      if (lat != null && lng != null) {
+        const markerColor =
+          node.status === "CRITICAL"
+            ? "#ff351c"
+            : node.status === "WARNING"
+              ? "#ff9d2e"
+              : "#45a66b";
+        const icon = L.divIcon({
+          html: renderToString(
+            <CircleLetterM size={32} color="#35495e" fill={markerColor} />,
+          ),
+          className: "custom-manhole-marker",
+          iconSize: [32, 32],
+          iconAnchor: [16, 16],
+        });
+        const marker = L.marker([lat, lng], { icon }).addTo(map);
+        marker.bindTooltip(node.manhole_id, {
+          className: "manhole-id-tooltip",
+          direction: "top",
+          offset: [0, -12],
+        });
 
         marker.on('click', () => {
-          if (onSelectManhole) {
-            onSelectManhole(node);
-          }
+          onSelectManholeRef.current?.(node);
           map.setView([lat, lng], 17, { animate: true });
         });
 
@@ -75,19 +86,32 @@ export default function GoogleMap({ manholes = [], onSelectManhole }) {
       if (mapRef.current) {
         mapRef.current.remove();
         mapRef.current = null;
+        markersRef.current = {};
       }
     };
-  }, [manholes, onSelectManhole]);
+  }, [manholes]);
+
+  useEffect(() => {
+    const map = mapRef.current;
+    const location =
+      selectedManhole?.location ||
+      manholes.find((node) => node.manhole_id === selectedManhole?.manhole_id)
+        ?.location;
+
+    if (!map || location?.lat == null || location?.lng == null) return;
+
+    map.setView([location.lat, location.lng], 17, { animate: true });
+  }, [manholes, selectedManhole]);
 
   return (
-    <div 
-      id="map-element" 
-      style={{ 
-        width: '100%', 
-        height: '100%', 
-        borderRadius: '12px', 
-        overflow: 'hidden' 
-      }} 
+    <div
+      id="map-element"
+      style={{
+        width: "100%",
+        height: "100%",
+        borderRadius: "12px",
+        overflow: "hidden",
+      }}
     />
   );
 }

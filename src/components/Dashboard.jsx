@@ -162,6 +162,11 @@ const [searchResult, setSearchResult] = useState("");
         const marker = L.marker([lat, lng], {
           icon: customManholeIcon,
         });
+        marker.bindTooltip(node.manhole_id, {
+          className: "manhole-id-tooltip",
+          direction: "top",
+          offset: [0, -12],
+        });
 
         marker.on("click", () => {
           setSelectedId(node.manhole_id);
